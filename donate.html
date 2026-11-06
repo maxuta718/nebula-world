@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Донат | NebulaWorld</title>
+<style>
+:root {
+  --bg: #0f0f1a;
+  --card: #1a1a2e;
+  --accent: #a855f7;
+  --accent2: #22c55e;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+header {
+  text-align: center;
+  padding: 3rem 1rem 1.5rem;
+  background: linear-gradient(180deg, #1a1a2e 0%, var(--bg) 100%);
+}
+h1 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+  margin-bottom: 0.5rem;
+}
+.subtitle { color: var(--muted); font-size: 1.1rem; }
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+  padding: 0 1rem;
+}
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+.nav a:hover, .nav a.active {
+  color: var(--text);
+  background: var(--card);
+}
+.container { max-width: 900px; margin: 0 auto; padding: 0 1rem 3rem; }
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #2d2d4a;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+.mono-btn {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 2px solid var(--accent2);
+  transition: 0.2s;
+}
+.mono-btn:hover { background: var(--accent2); color: #000; }
+.tg-btn {
+  display: inline-block;
+  background: #229ED9;
+  color: #fff;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+.tg-btn:hover { background: #1b8ec4; }
+.ranks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+.rank {
+  background: #111827;
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-align: center;
+  border: 1px solid #2d2d4a;
+  transition: 0.2s;
+}
+.rank:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.rank .name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+.rank .price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--accent2);
+  margin-bottom: 0.5rem;
+}
+.rank .desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+.rank a {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+.rank a:hover { background: #9333ea; }
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Магазин доната</h1>
+  <p class="subtitle">Поддержи сервер и получи привилегии</p>
+  <nav class="nav">
+    <a href="index.html">Главная</a>
+    <a href="rules.html">Правила</a>
+    <a href="donate.html" class="active">Донат</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card" style="text-align:center;">
+    <h2>Оплата через Monobank</h2>
+    <p style="margin-bottom:1rem; color:var(--muted);">
+      Перейди по ссылке, укажи ник в комментарии к платежу и напиши в Telegram после оплаты.
+    </p>
+    <a href="https://send.monobank.ua/jar/5VASN4MRec" target="_blank" rel="noopener" class="mono-btn">Открыть банку Monobank</a>
+    <p style="margin-top:1rem;">
+      <a href="https://t.me/ServerNebulaWorld" target="_blank" rel="noopener" class="tg-btn">Написать в Telegram</a>
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Привилегии</h2>
+    <div class="ranks">
+      <div class="rank">
+        <div class="name">VIP</div>
+        <div class="price">50 грн</div>
+        <div class="desc">Базовый донат-ранг</div>
+        <a href="https://send.monobank.ua/jar/5VASN4MRec" target="_blank">Купить</a>
+      </div>
+      <div class="rank">
+        <div class="name">VIP+</div>
+        <div class="price">100 грн</div>
+        <div class="desc">Расширенный VIP</div>
+        <a href="https://send.monobank.ua/jar/5VASN4MRec" target="_blank">Купить</a>
+      </div>
+      <div class="rank">
+        <div class="name">Iron</div>
+        <div class="price">150 грн</div>
+        <div class="desc">Средний уровень</div>
+        <a href="https://send.monobank.ua/jar/5VASN4MRec" target="_blank">Купить</a>
+      </div>
+      <div class="rank">
+        <div class="name">Gold</div>
+        <div class="price">250 грн</div>
+        <div class="desc">Популярный ранг</div>
+        <a href="https://send.monobank.ua/jar/5VASN4MRec" target="_blank">Купить</a>
+      </div>
+      <div class="rank">
+        <div class="name">Diamond</div>
+        <div class="price">400 грн</div>
+        <div class="desc">Высокий уровень</div>
+        <a href="https://send.monobank.ua/jar/5VASN4MRec" target="_blank">Купить</a>
+      </div>
+      <div class="rank">
+        <div class="name">Emerald</div>
+        <div class="price">600 грн</div>
+        <div class="desc">Премиум</div>
+        <a href="https://send.monobank.ua/jar/5VASN4MRec" target="_blank">Купить</a>
+      </div>
+      <div class="rank">
+        <div class="name">Netherite</div>
+        <div class="price">900 грн</div>
+        <div class="desc">Топ-ранг</div>
+        <a href="https://send.monobank.ua/jar/5VASN4MRec" target="_blank">Купить</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <h2>Медиа-ранги</h2>
+    <p style="color:var(--muted); margin-bottom:1rem;">
+      YouTube / Twitch / TikTok — по заявке в Discord
+    </p>
+    <a href="https://discord.gg/zAzPeP39tT" target="_blank" rel="noopener" class="tg-btn" style="background:#5865F2;">Подать заявку в Discord</a>
+  </div>
+</div>
+
+<footer>
+  NebulaWorld © 2026 • <a href="https://t.me/ServerNebulaWorld" target="_blank">Telegram</a>
+</footer>
+</body>
+</html>
