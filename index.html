@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NebulaWorld | Minecraft Сервер</title>
+<style>
+:root {
+  --bg: #0f0f1a;
+  --card: #1a1a2e;
+  --accent: #a855f7;
+  --accent2: #22c55e;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+header {
+  text-align: center;
+  padding: 3rem 1rem 1.5rem;
+  background: linear-gradient(180deg, #1a1a2e 0%, var(--bg) 100%);
+}
+h1 {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+  margin-bottom: 0.5rem;
+}
+.subtitle { color: var(--muted); font-size: 1.1rem; }
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+  padding: 0 1rem;
+}
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+.nav a:hover, .nav a.active {
+  color: var(--text);
+  background: var(--card);
+}
+.container { max-width: 900px; margin: 0 auto; padding: 0 1rem 3rem; }
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #2d2d4a;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.ip-box {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ip {
+  font-family: monospace;
+  font-size: 1.3rem;
+  background: #111;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+  letter-spacing: 1px;
+}
+button, .btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+}
+button:hover, .btn:hover { background: #9333ea; transform: translateY(-2px); }
+button.copied { background: var(--accent2); }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  text-align: center;
+}
+.stat {
+  background: #111827;
+  padding: 1rem;
+  border-radius: 12px;
+}
+.stat .num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent2);
+}
+.stat .label { color: var(--muted); font-size: 0.9rem; }
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+.links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.links a {
+  display: inline-block;
+  padding: 0.9rem 1.6rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.links .mono {
+  background: #000;
+  color: #fff;
+  border: 2px solid var(--accent2);
+}
+.links .mono:hover { background: var(--accent2); color: #000; }
+.links .tg {
+  background: #229ED9;
+  color: #fff;
+}
+.links .tg:hover { background: #1b8ec4; }
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+@media (max-width: 600px) {
+  .ip-box { flex-direction: column; }
+  .ip { width: 100%; text-align: center; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NebulaWorld</h1>
+  <p class="subtitle">Лучший Minecraft сервер</p>
+  <nav class="nav">
+    <a href="index.html" class="active">Главная</a>
+    <a href="rules.html">Правила</a>
+    <a href="donate.html">Донат</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <div class="ip-box">
+      <div class="ip" id="ip">neebulaanarhy.mcsh.gg</div>
+      <button id="copyBtn" onclick="copyIP()">Скопировать IP</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Онлайн</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="num" id="online">—</div>
+        <div class="label">Игроков онлайн</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="max">128</div>
+        <div class="label">Максимум</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="version">1.21</div>
+        <div class="label">Версия</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <h2>Ссылки</h2>
+    <div class="links">
+      <a href="donate.html" class="mono">Донат</a>
+      <a href="https://t.me/ServerNebulaWorld" target="_blank" rel="noopener" class="tg">Telegram</a>
+      <a href="rules.html" class="btn">Правила</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  NebulaWorld © 2026 • <a href="https://t.me/ServerNebulaWorld" target="_blank">Telegram</a>
+</footer>
+
+<script>
+function copyIP() {
+  const ip = document.getElementById('ip').textContent;
+  navigator.clipboard.writeText(ip).then(() => {
+    const btn = document.getElementById('copyBtn');
+    const orig = btn.textContent;
+    btn.textContent = 'Скопировано!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    alert('Не удалось скопировать. IP: ' + ip);
+  });
+}
+
+async function loadStatus() {
+  try {
+    const res = await fetch('https://api.mcsrvstat.us/3/neebulaanarhy.mcsh.gg');
+    const data = await res.json();
+    if (data.online) {
+      document.getElementById('online').textContent = data.players.online;
+      document.getElementById('max').textContent = data.players.max || 128;
+      if (data.version) document.getElementById('version').textContent = data.version;
+    } else {
+      document.getElementById('online').textContent = '0';
+    }
+  } catch (e) {
+    document.getElementById('online').textContent = '—';
+  }
+}
+loadStatus();
+setInterval(loadStatus, 60000);
+</script>
+</body>
+</html>
