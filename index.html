@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NebulaWorld | Minecraft Сервер</title>
+<style>
+:root {
+  --bg: #0f0f1a;
+  --card: #1a1a2e;
+  --accent: #a855f7;
+  --accent2: #22c55e;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --danger: #ef4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+header {
+  text-align: center;
+  padding: 3rem 1rem 1.5rem;
+  background: linear-gradient(180deg, #1a1a2e 0%, var(--bg) 100%);
+}
+h1 {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+  margin-bottom: 0.5rem;
+}
+.subtitle { color: var(--muted); font-size: 1.1rem; }
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+  padding: 0 1rem;
+}
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+.nav a:hover, .nav a.active {
+  color: var(--text);
+  background: var(--card);
+}
+.container { max-width: 900px; margin: 0 auto; padding: 0 1rem 3rem; }
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #2d2d4a;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.ip-box {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ip {
+  font-family: monospace;
+  font-size: 1.3rem;
+  background: #111;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+  letter-spacing: 1px;
+}
+button, .btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+}
+button:hover, .btn:hover { background: #9333ea; transform: translateY(-2px); }
+button.copied { background: var(--accent2); }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+.stat {
+  background: #111827;
+  padding: 1rem;
+  border-radius: 12px;
+}
+.stat .num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent2);
+}
+.stat .label { color: var(--muted); font-size: 0.9rem; }
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  text-align: center;
+}
+.status-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 auto 1rem;
+  width: fit-content;
+}
+.status-badge.online {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+.status-badge.offline {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+.server-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  image-rendering: pixelated;
+  background: #111;
+  display: none;
+  margin: 0 auto 0.5rem;
+}
+.motd {
+  background: #111827;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 1rem 0;
+  font-family: monospace;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  text-align: center;
+}
+.players-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+.player {
+  background: #111827;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.player img {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  image-rendering: pixelated;
+}
+.offline-msg {
+  color: var(--muted);
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+}
+.links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.links a {
+  display: inline-block;
+  padding: 0.9rem 1.6rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.links .mono {
+  background: #000;
+  color: #fff;
+  border: 2px solid var(--accent2);
+}
+.links .mono:hover { background: var(--accent2); color: #000; }
+.links .tg {
+  background: #229ED9;
+  color: #fff;
+}
+.links .tg:hover { background: #1b8ec4; }
+.links .discord {
+  background: #5865F2;
+  color: #fff;
+}
+.links .discord:hover { background: #4752c4; }
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+@media (max-width: 600px) {
+  .ip-box { flex-direction: column; }
+  .ip { width: 100%; text-align: center; }
+  .stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NebulaWorld</h1>
+  <p class="subtitle">Лучший Minecraft сервер</p>
+  <nav class="nav">
+    <a href="index.html" class="active">Главная</a>
+    <a href="rules.html">Правила</a>
+    <a href="donate.html">Донат</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <div class="ip-box">
+      <div class="ip" id="ip">neebulaanarhy.mcsh.gg</div>
+      <button id="copyBtn" onclick="copyIP()">Скопировать IP</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Мониторинг сервера</h2>
+    <div id="statusBadge" class="status-badge offline">
+      <span class="status-dot"></span>
+      <span id="statusText">Проверка...</span>
+    </div>
+
+    <img id="serverIcon" class="server-icon" alt="Server Icon">
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num" id="online">—</div>
+        <div class="label">Онлайн</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="max">—</div>
+        <div class="label">Максимум</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="version">—</div>
+        <div class="label">Версия</div>
+      </div>
+    </div>
+
+    <div id="motd" class="motd" style="display:none;"></div>
+    <div id="playersList" class="players-list"></div>
+    <div id="offlineMsg" class="offline-msg" style="display:none;">
+      Сервер сейчас оффлайн.<br>
+      Бесплатные серверы на MCServerHost уходят в сон при отсутствии игроков.
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <h2>Ссылки</h2>
+    <div class="links">
+      <a href="donate.html" class="mono">Донат</a>
+      <a href="https://t.me/ServerNebulaWorld" target="_blank" rel="noopener" class="tg">Telegram</a>
+      <a href="https://discord.gg/zAzPeP39tT" target="_blank" rel="noopener" class="discord">Discord</a>
+      <a href="rules.html" class="btn">Правила</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  NebulaWorld © 2026 • <a href="https://t.me/ServerNebulaWorld" target="_blank">Telegram</a>
+</footer>
+
+<script>
+function copyIP() {
+  const ip = document.getElementById('ip').textContent;
+  navigator.clipboard.writeText(ip).then(() => {
+    const btn = document.getElementById('copyBtn');
+    const orig = btn.textContent;
+    btn.textContent = 'Скопировано!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    alert('Не удалось скопировать. IP: ' + ip);
+  });
+}
+
+async function loadStatus() {
+  const statusBadge = document.getElementById('statusBadge');
+  const statusText = document.getElementById('statusText');
+  const onlineEl = document.getElementById('online');
+  const maxEl = document.getElementById('max');
+  const versionEl = document.getElementById('version');
+  const iconEl = document.getElementById('serverIcon');
+  const motdEl = document.getElementById('motd');
+  const playersEl = document.getElementById('playersList');
+  const offlineMsg = document.getElementById('offlineMsg');
+
+  try {
+    const res = await fetch('https://api.mcsrvstat.us/3/neebulaanarhy.mcsh.gg');
+    const data = await res.json();
+
+    if (data.online) {
+      statusBadge.className = 'status-badge online';
+      statusText.textContent = 'Онлайн';
+      offlineMsg.style.display = 'none';
+
+      onlineEl.textContent = data.players?.online ?? 0;
+      maxEl.textContent = data.players?.max ?? '—';
+      versionEl.textContent = data.version || data.protocol?.name || '—';
+
+      if (data.icon) {
+        iconEl.src = data.icon;
+        iconEl.style.display = 'block';
+      }
+
+      if (data.motd && data.motd.html && data.motd.html.length) {
+        motdEl.innerHTML = data.motd.html.join('<br>');
+        motdEl.style.display = 'block';
+      } else if (data.motd && data.motd.clean) {
+        motdEl.textContent = data.motd.clean.join('\n');
+        motdEl.style.display = 'block';
+      }
+
+      playersEl.innerHTML = '';
+      if (data.players?.list && data.players.list.length) {
+        data.players.list.forEach(p => {
+          const div = document.createElement('div');
+          div.className = 'player';
+          div.innerHTML = `<img src="https://crafatar.com/avatars/${p.uuid}?size=20&overlay" alt=""> ${p.name}`;
+          playersEl.appendChild(div);
+        });
+      }
+    } else {
+      statusBadge.className = 'status-badge offline';
+      statusText.textContent = 'Оффлайн';
+      onlineEl.textContent = '0';
+      maxEl.textContent = '—';
+      versionEl.textContent = '—';
+      iconEl.style.display = 'none';
+      motdEl.style.display = 'none';
+      playersEl.innerHTML = '';
+      offlineMsg.style.display = 'block';
+    }
+  } catch (e) {
+    statusBadge.className = 'status-badge offline';
+    statusText.textContent = 'Ошибка';
+    onlineEl.textContent = '—';
+    console.error(e);
+  }
+}
+
+loadStatus();
+setInterval(loadStatus, 60000);
+</script>
+</body>
+</html>
